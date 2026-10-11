@@ -29,11 +29,16 @@ dl.parts dd{margin:0}
   line-height:1.6;color:var(--text);background:var(--raised);border-radius:8px;padding:14px 16px}
 
 label.q,legend{display:block;font-weight:600;color:var(--paper);margin-bottom:8px;font-size:17px}
-textarea,input[type=text],input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--paper);
+textarea,input[type=text],input[type=email],select{width:100%;font:inherit;font-size:16px;color:var(--paper);
   background:var(--raised);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
 textarea{min-height:240px;resize:vertical}
-textarea::placeholder{color:var(--faint)}
-textarea:focus,input:focus{outline:none;border-color:var(--sky)}
+textarea::placeholder,input::placeholder{color:var(--faint)}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--sky)}
+select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px;
+  background:var(--raised) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2399A0B6' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center}
+select:invalid{color:var(--faint)}
+select option,select optgroup{background:var(--raised);color:var(--paper)}
+select optgroup{color:var(--faint);font-style:normal}
 .under{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:14px;color:var(--faint)}
 .link-btn{font:inherit;font-size:14px;background:none;border:0;padding:0;color:var(--sky);cursor:pointer;border-bottom:1px dashed currentColor}
 .link-btn:hover{color:var(--mint)}
@@ -45,6 +50,7 @@ fieldset{border:0;padding:0;margin-top:32px}
 .roles small{color:var(--faint);font-size:14px}
 .fields{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
 .fields .wide{grid-column:1/-1}
+.fields[hidden],.fields [hidden]{display:none}
 .fields label{display:block;font-size:14px;color:var(--faint);margin-bottom:4px}
 .hp{position:absolute;left:-9999px}
 .send{margin-top:28px;font:inherit;font-size:17px;font-weight:600;color:var(--paper);background:var(--blue);
@@ -105,11 +111,66 @@ SSIM: Structural similarity index measure</pre>
       </div>
     </fieldset>
 
-    <div class="fields">
+    <div class="fields" id="fields" hidden>
       <div><label for="name">Name</label><input type="text" id="name" name="name" required autocomplete="name"></div>
-      <div><label for="aff">Department / affiliation</label><input type="text" id="aff" name="affiliation" required autocomplete="organization"></div>
+      <div><label for="title">Title</label><input type="text" id="title" name="title" required autocomplete="organization-title"></div>
+      <div class="wide" id="dept-w" hidden><label for="dept">Department</label><select id="dept" name="department" disabled>
+        <option value="">Choose your department</option>
+        <optgroup label="Faculty of Science">
+          <option value="Department of Chemistry">Department of Chemistry</option>
+          <option value="Department of Food Science and Nutrition">Department of Food Science and Nutrition</option>
+          <option value="Department of Life Sciences">Department of Life Sciences</option>
+          <option value="Department of Physics and Materials">Department of Physics and Materials</option>
+        </optgroup>
+        <optgroup label="Faculty of Engineering">
+          <option value="Department of Aeronautical and Aviation Engineering">Department of Aeronautical and Aviation Engineering</option>
+          <option value="Department of Biomedical Engineering">Department of Biomedical Engineering</option>
+          <option value="Department of Electrical and Electronic Engineering">Department of Electrical and Electronic Engineering</option>
+          <option value="Department of Industrial and Systems Engineering">Department of Industrial and Systems Engineering</option>
+          <option value="Department of Mechanical Engineering">Department of Mechanical Engineering</option>
+        </optgroup>
+        <optgroup label="Faculty of Construction and Environment">
+          <option value="Department of Architecture">Department of Architecture</option>
+          <option value="Department of Building Environment and Energy Engineering">Department of Building Environment and Energy Engineering</option>
+          <option value="Department of Civil and Environmental Engineering">Department of Civil and Environmental Engineering</option>
+          <option value="Department of Construction Management and Intelligence">Department of Construction Management and Intelligence</option>
+          <option value="Department of Land Surveying and Geospatial Science">Department of Land Surveying and Geospatial Science</option>
+        </optgroup>
+        <optgroup label="Faculty of Computer and Mathematical Sciences">
+          <option value="Department of Applied Mathematics">Department of Applied Mathematics</option>
+          <option value="Department of Computing">Department of Computing</option>
+          <option value="Department of Data Science and Artificial Intelligence">Department of Data Science and Artificial Intelligence</option>
+        </optgroup>
+        <optgroup label="Faculty of Health and Social Sciences">
+          <option value="Department of Applied Social Sciences">Department of Applied Social Sciences</option>
+          <option value="Department of Health Technology and Informatics">Department of Health Technology and Informatics</option>
+          <option value="Department of Rehabilitation Sciences">Department of Rehabilitation Sciences</option>
+          <option value="School of Nursing">School of Nursing</option>
+          <option value="School of Optometry">School of Optometry</option>
+        </optgroup>
+        <optgroup label="Faculty of Business">
+          <option value="Department of Logistics and Maritime Studies">Department of Logistics and Maritime Studies</option>
+          <option value="Department of Management and Marketing">Department of Management and Marketing</option>
+          <option value="School of Accounting and Finance">School of Accounting and Finance</option>
+        </optgroup>
+        <optgroup label="Faculty of Humanities">
+          <option value="Department of Chinese History and Culture">Department of Chinese History and Culture</option>
+          <option value="Department of English and Communication">Department of English and Communication</option>
+          <option value="Department of Language Science and Technology">Department of Language Science and Technology</option>
+          <option value="Division of Artificial Intelligence and the Humanities">Division of Artificial Intelligence and the Humanities</option>
+        </optgroup>
+        <optgroup label="Schools">
+          <option value="School of Design">School of Design</option>
+          <option value="School of Fashion and Textiles">School of Fashion and Textiles</option>
+          <option value="School of Hotel and Tourism Management">School of Hotel and Tourism Management</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="Other PolyU unit">Other PolyU unit</option>
+        </optgroup>
+      </select></div>
+      <div class="wide" id="aff-w" hidden><label for="aff">Affiliation</label><input type="text" id="aff" name="affiliation" autocomplete="organization" disabled></div>
       <div class="wide"><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
-      <div class="wide" id="sup" hidden><label for="supv">Supervisor’s name and email</label><input type="text" id="supv" name="supervisor"></div>
+      <div class="wide" id="sup" hidden><label for="supv">Supervisor’s name and email</label><input type="text" id="supv" name="supervisor" disabled></div>
     </div>
     <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
@@ -148,10 +209,23 @@ $("use-sample").onclick = () => {
 };
 
 
+const TITLE_HINT = {
+  "PolyU faculty": "e.g. Associate Professor",
+  "PolyU student / postdoc": "e.g. PhD student, Postdoctoral Fellow",
+  "Other": "e.g. Professor, Research Scientist"
+};
+const show = (wrap, input, on) => {           // hidden + disabled + not required, so FormData and validation skip it
+  $(wrap).hidden = !on; $(input).disabled = !on; $(input).required = on;
+};
+
 document.querySelectorAll('input[name=role]').forEach(r => r.onchange = () => {
-  const student = r.checked && r.value.startsWith("PolyU student");
-  $("sup").hidden = !student;
-  $("supv").required = student;
+  if (!r.checked) return;
+  const polyu = r.value !== "Other", student = r.value.startsWith("PolyU student");
+  $("fields").hidden = false;
+  $("title").placeholder = TITLE_HINT[r.value];
+  show("dept-w", "dept", polyu);
+  show("aff-w", "aff", !polyu);
+  show("sup", "supv", student);
 });
 
 $("f").onsubmit = async e => {
@@ -164,12 +238,13 @@ $("f").onsubmit = async e => {
       bad.type === "radio" ? "Please say who you are." :
       bad.id === "msg" ? "Please write your question." :
       bad.type === "email" ? "Please enter a valid email address." :
+      bad.tagName === "SELECT" ? "Please choose your department." :
       "Please fill in " + f.querySelector(`label[for="${bad.id}"]`).textContent.toLowerCase() + ".";
     bad.focus();
     return;
   }
   const d = Object.fromEntries(new FormData(f));
-  const text = `${d.name} · ${d.affiliation} · ${d.email}\n${d.role}` +
+  const text = `${d.name} · ${d.title} · ${d.department || d.affiliation} · ${d.email}\n${d.role}` +
     (d.supervisor ? `\nSupervisor: ${d.supervisor}` : "") + `\n\n${d.message}`;
 
   $("send").disabled = true;
