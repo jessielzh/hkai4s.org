@@ -46,6 +46,8 @@
   main{max-width:1120px;padding:44px 40px 32px}
   h1{font-size:clamp(36px,4.2vw,50px);white-space:nowrap}
   h1 .narrow{display:none}
+  body{min-height:100vh}
+  main{display:flex;flex-direction:column;justify-content:center}
 }
 </style>
 </head>
@@ -77,6 +79,18 @@
 </main>
 <footer>© 2026 RCAI4S · PAAI · PolyU · Contact: <a href="https://jessielzh.com">Prof. Jessie Li</a></footer>
 <script>
+// big screens: scale the whole page up until it fills the screen (width or height, whichever runs out first)
+(() => {
+  const main = document.querySelector('main'), foot = document.querySelector('footer');
+  function fit() {
+    main.style.zoom = ''; main.style.flex = 'none';
+    const h = main.offsetHeight, w = main.offsetWidth;
+    main.style.flex = '';
+    if (innerWidth < 960) return;
+    main.style.zoom = Math.max(1, Math.min(innerWidth / w, (innerHeight - foot.offsetHeight - 6) / h, 2));
+  }
+  addEventListener('resize', fit); fit();
+})();
 // a window onto the report: scale it to the frame and let it drift down slowly, then start over
 (() => {
   const win = document.querySelector('.window'), reel = document.getElementById('reel'), fr = document.getElementById('report');
