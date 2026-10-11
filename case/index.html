@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiong Zhao's case · RCAI4S</title>
+<meta name="description" content="STEM denoising and 2x super-resolution with an AI agent: a working session with Prof. Jiong Zhao, 22 September 2026.">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  :root{
+    --paper:#f3f4f2;
+    --surface:#ffffff;
+    --surface-2:#eaece8;
+    --ink:#14181a;
+    --ink-2:#394244;
+    --muted:#6a7376;
+    --rule:#d7dad5;
+    --rule-2:#b9bfb9;
+    --accent:#146b79;
+    --accent-soft:#e0eef0;
+    --warn:#8a5600;
+    --warn-soft:#f6eddc;
+    --neg:#9e3122;
+    --neg-soft:#f6e6e2;
+    --code-bg:#e9ebe7;
+    --shadow:0 1px 2px rgba(20,24,26,.06),0 8px 24px -16px rgba(20,24,26,.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1214;
+      --surface:#171b1e;
+      --surface-2:#1e2326;
+      --ink:#e7eae8;
+      --ink-2:#c2c9c8;
+      --muted:#8d9799;
+      --rule:#2b3235;
+      --rule-2:#3d4649;
+      --accent:#5cb8c7;
+      --accent-soft:#12292e;
+      --warn:#d8a24a;
+      --warn-soft:#2a2216;
+      --neg:#e08272;
+      --neg-soft:#2c1a17;
+      --code-bg:#20262a;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1214;
+    --surface:#171b1e;
+    --surface-2:#1e2326;
+    --ink:#e7eae8;
+    --ink-2:#c2c9c8;
+    --muted:#8d9799;
+    --rule:#2b3235;
+    --rule-2:#3d4649;
+    --accent:#5cb8c7;
+    --accent-soft:#12292e;
+    --warn:#d8a24a;
+    --warn-soft:#2a2216;
+    --neg:#e08272;
+    --neg-soft:#2c1a17;
+    --code-bg:#20262a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    font-size:17px;
+    line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding-inline:20px;
+    padding-block:0 72px;
+  }
+  .col{max-width:660px;}
+  p,ul,ol{margin:0 0 1.1em;}
+  ul,ol{padding-left:1.3em;}
+  li{margin-bottom:.6em;}
+  strong{font-weight:600;color:var(--ink);}
+  em{font-style:italic;}
+  a{color:var(--accent);}
+  code{
+    font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.84em;
+    background:var(--code-bg);
+    border-radius:3px;
+    padding:.12em .34em;
+    color:var(--ink-2);
+    overflow-wrap:break-word;
+  }
+
+  /* ---------- masthead ---------- */
+  .mast{
+    border-bottom:1px solid var(--rule);
+    padding-block:56px 32px;
+    margin-bottom:40px;
+  }
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-weight:600;
+    font-size:clamp(2rem,5.2vw,3rem);
+    line-height:1.08;
+    letter-spacing:-.025em;
+    text-wrap:balance;
+    margin:0 0 20px;
+  }
+  h1 .times{font-variant-numeric:normal;}
+  .dek{
+    font-size:1.12rem;
+    color:var(--ink-2);
+    max-width:640px;
+    margin:0 0 22px;
+  }
+  .byline{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    letter-spacing:.06em;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin:0;
+  }
+
+  /* ---------- headline metrics ---------- */
+  .metrics{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:28px;
+  }
+  .metric{
+    background:var(--surface);
+    padding:18px 20px 16px;
+  }
+  .metric .v{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-weight:600;
+    font-size:1.75rem;
+    letter-spacing:-.02em;
+    line-height:1.1;
+    font-variant-numeric:tabular-nums;
+    display:block;
+  }
+  .metric .u{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:.95rem;
+    font-weight:500;
+    color:var(--muted);
+    margin-left:.22em;
+    letter-spacing:0;
+  }
+  .metric .k{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:8px;
+    display:block;
+  }
+
+  /* ---------- the two verdicts ---------- */
+  .verdicts{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:16px;
+    margin-bottom:8px;
+  }
+  .verdict{
+    border-radius:4px;
+    padding:20px 22px 18px;
+    border:1px solid var(--rule);
+    background:var(--surface);
+    border-left-width:3px;
+  }
+  .verdict.good{border-left-color:var(--accent);}
+  .verdict.bad{border-left-color:var(--neg);}
+  .verdict .tag{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:10px;
+  }
+  .verdict.good .tag{color:var(--accent);}
+  .verdict.bad .tag{color:var(--neg);}
+  .verdict h3{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:1.05rem;
+    font-weight:600;
+    line-height:1.35;
+    margin:0 0 8px;
+  }
+  .verdict p{
+    font-size:.95rem;
+    color:var(--ink-2);
+    margin:0;
+  }
+
+  /* ---------- sections ---------- */
+  section{padding-top:52px;}
+  .shead{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    border-top:1px solid var(--rule);
+    padding-top:14px;
+    margin-bottom:26px;
+  }
+  .snum{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.1em;
+    color:var(--accent);
+    font-variant-numeric:tabular-nums;
+    padding-top:.35em;
+  }
+  h2{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:1.5rem;
+    font-weight:600;
+    letter-spacing:-.015em;
+    line-height:1.25;
+    margin:0;
+    text-wrap:balance;
+  }
+  h3.sub{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:1.02rem;
+    font-weight:600;
+    margin:2em 0 .7em;
+    letter-spacing:-.005em;
+  }
+
+  .lede{
+    font-size:1.16rem;
+    line-height:1.55;
+    color:var(--ink);
+    border-left:3px solid var(--accent);
+    padding-left:18px;
+    margin-bottom:1.2em;
+  }
+
+  /* ---------- tables ---------- */
+  .tw{
+    overflow-x:auto;
+    margin:0 0 10px;
+    border:1px solid var(--rule);
+    border-radius:4px;
+    background:var(--surface);
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+    min-width:440px;
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:.9rem;
+    font-variant-numeric:tabular-nums;
+  }
+  th,td{
+    text-align:left;
+    padding:10px 16px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+    line-height:1.5;
+  }
+  thead th{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--muted);
+    background:var(--surface-2);
+    white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tr.hi td{background:var(--accent-soft);font-weight:600;}
+  tr.neg td{background:var(--neg-soft);}
+  tr.neg td strong{color:var(--neg);}
+  td.num,th.num{text-align:right;white-space:nowrap;}
+  .tnote{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    line-height:1.6;
+    color:var(--muted);
+    margin:0 0 1.6em;
+  }
+
+  /* ---------- figures ---------- */
+  figure{
+    margin:2.2em 0;
+    max-width:100%;
+  }
+  figure img{
+    display:block;
+    width:100%;
+    height:auto;
+    border:1px solid var(--rule);
+    border-radius:4px;
+    background:var(--surface);
+  }
+  figcaption{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    line-height:1.65;
+    color:var(--muted);
+    margin-top:10px;
+    max-width:660px;
+  }
+  figcaption b{
+    color:var(--ink-2);
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    margin-right:.5em;
+  }
+
+  /* ---------- diagram ---------- */
+  .diagram{
+    overflow-x:auto;
+    border:1px solid var(--rule);
+    border-radius:4px;
+    background:var(--surface);
+    padding:14px 16px;
+    margin:1.6em 0 .8em;
+  }
+  .diagram svg{display:block;min-width:820px;}
+  .dg-box{fill:var(--surface-2);stroke:var(--rule-2);stroke-width:1;}
+  .dg-box-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1;}
+  .dg-t{fill:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:12px;font-weight:500;}
+  .dg-s{fill:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:10.5px;}
+  .dg-line{stroke:var(--rule-2);stroke-width:1.4;fill:none;}
+  .dg-head{fill:var(--rule-2);}
+  .dg-alt{stroke:var(--accent);stroke-width:1.4;fill:none;stroke-dasharray:4 3;}
+  .dg-alt-head{fill:var(--accent);}
+  .dg-lab{fill:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em;}
+
+  /* ---------- code ---------- */
+  pre{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px;
+    line-height:1.75;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:14px 16px;
+    overflow-x:auto;
+    margin:1.2em 0 1.4em;
+    color:var(--ink-2);
+  }
+  pre .cm{color:var(--muted);}
+  pre code{background:none;padding:0;font-size:inherit;}
+
+  /* ---------- callouts ---------- */
+  .call{
+    border:1px solid var(--rule);
+    border-left:3px solid var(--warn);
+    background:var(--warn-soft);
+    border-radius:4px;
+    padding:16px 20px;
+    margin:1.6em 0;
+    font-size:.99rem;
+  }
+  .call p:last-child{margin-bottom:0;}
+  .call.stop{border-left-color:var(--neg);background:var(--neg-soft);}
+  .call .tag{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--warn);
+    display:block;
+    margin-bottom:8px;
+  }
+  .call.stop .tag{color:var(--neg);}
+
+  /* ---------- caveat list ---------- */
+  ol.caveats{
+    list-style:none;
+    padding:0;
+    margin:0;
+    counter-reset:cav;
+  }
+  ol.caveats > li{
+    counter-increment:cav;
+    border-top:1px solid var(--rule);
+    padding:16px 0 4px 44px;
+    position:relative;
+    margin:0;
+  }
+  ol.caveats > li::before{
+    content:counter(cav,decimal-leading-zero);
+    position:absolute;
+    left:0;
+    top:18px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    font-weight:600;
+    color:var(--neg);
+    letter-spacing:.06em;
+  }
+  ol.caveats > li:last-child{border-bottom:1px solid var(--rule);}
+
+  ol.next{
+    list-style:none;
+    padding:0;
+    margin:0;
+    counter-reset:nx;
+  }
+  ol.next > li{
+    counter-increment:nx;
+    border-top:1px solid var(--rule);
+    padding:16px 0 4px 44px;
+    position:relative;
+    margin:0;
+  }
+  ol.next > li::before{
+    content:counter(nx);
+    position:absolute;
+    left:0;
+    top:16px;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    font-weight:600;
+    display:grid;
+    place-items:center;
+  }
+  ol.next > li:last-child{border-bottom:1px solid var(--rule);}
+
+  footer{
+    margin-top:64px;
+    border-top:1px solid var(--rule);
+    padding-top:20px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+
+  @media (max-width:640px){
+    body{font-size:16px;}
+    .mast{padding-block:36px 26px;}
+    .metric .v{font-size:1.5rem;}
+    section{padding-top:40px;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    a,summary{transition:color .15s ease;}
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px;}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<a href="/" style="display:inline-block;margin:18px 0 0;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:var(--muted);text-decoration:none">← RCAI4S · Research Centre on AI for Science</a>
+
+
+  <header class="mast">
+    <p class="eyebrow">ADF-STEM · restoration benchmark</p>
+    <h1>STEM Denoising + 2× Super-Resolution</h1>
+    <p class="dek">Predicting the clean 128×128 <code>target</code> from the noisy 64×64 <code>input</code> on 1500 simulated ADF-STEM patches (<code>simulation/train_data1</code>), scored on a held-out 20%.</p>
+    <p class="byline">22 September 2026 · workshop-0922</p>
+  </header>
+
+  <div class="metrics">
+    <div class="metric"><span class="v">33.17<span class="u">dB</span></span><span class="k">PSNR, 300 held-out patches</span></div>
+    <div class="metric"><span class="v">0.9650</span><span class="k">SSIM</span></div>
+    <div class="metric"><span class="v">+6.66<span class="u">dB</span></span><span class="k">over bicubic ×2</span></div>
+    <div class="metric"><span class="v">300<span class="u">/300</span></span><span class="k">patches beating baseline</span></div>
+  </div>
+
+  <div class="verdicts">
+    <div class="verdict good">
+      <span class="tag">Holds — simulation</span>
+      <h3>A 0.6M-parameter residual CNN beats bicubic on every held-out patch.</h3>
+      <p>+6.66 dB and +0.165 SSIM, and it resolves atom columns that are genuinely ambiguous in the low-dose input.</p>
+    </div>
+    <div class="verdict bad">
+      <span class="tag">Does not hold — experiment</span>
+      <h3>Do not point it at experimental data yet.</h3>
+      <p>On two of the 15 real micrographs it paints lattice texture into amorphous regions and into the vacuum. That is hallucination, and it is the failure mode that matters.</p>
+    </div>
+  </div>
+
+  <section id="result">
+    <div class="shead"><span class="snum">01</span><h2>Result</h2></div>
+    <div class="col">
+      <p class="lede"><strong>33.17 dB PSNR / 0.9650 SSIM on 300 held-out patches, against 26.51 dB / 0.7996 for bicubic upsampling — a gain of +6.66 dB and +0.165 SSIM.</strong> The model beats the baseline on 300 of 300 patches.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr><th>Model</th><th class="num">PSNR (dB)</th><th class="num">SSIM</th><th class="num">vs. baseline</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bicubic ×2 <span style="color:var(--muted)">(baseline)</span></td><td class="num">26.51 ± 3.06</td><td class="num">0.7996 ± 0.1220</td><td class="num">—</td></tr>
+          <tr class="hi"><td>EDSR-lite</td><td class="num">33.17 ± 3.16</td><td class="num">0.9650 ± 0.0428</td><td class="num">+6.66 dB / +0.165</td></tr>
+          <tr><td>EDSR-lite + <code>point_map</code> head</td><td class="num">32.83 ± 3.12</td><td class="num">0.9624 ± 0.0454</td><td class="num">+6.32 dB / +0.163</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">Spread is quoted across the 300 patches, not as an uncertainty on the mean. Patch-to-patch variation is large (about 3 dB) because effective dose varies between patches — in the scatter below the worst inputs sit near 15 dB bicubic and the cleanest near 32 dB.</p>
+
+    <div class="col">
+      <p><strong>The auxiliary head did not help.</strong> It cost 0.33 dB. Both models were scored on the identical split, so the comparison can be paired, and paired it is unambiguous: mean difference 0.333 dB, SE 0.011, t = 31, plain model ahead on 97% of individual patches. Small, but real rather than noise. The likely cause is capacity competition, not anything subtle — the <code>point_map</code> loss pulls the shared trunk toward sparse delta-like peaks, which is the opposite of what the smooth <code>target</code> needs. <strong>Use the plain model.</strong></p>
+    </div>
+
+    <figure>
+      <img src="fig1_qualitative.png" alt="Worst, median and best held-out patches by model PSNR, shown as input, bicubic, model, target and a signed error map.">
+      <figcaption><b>Fig. 1</b> Worst, median and best held-out patches by model PSNR. The error map is signed: blue = model too dark, red = too bright.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="fig2_curves.png" alt="Left panel, test PSNR against epoch for both models. Right panel, scatter of model PSNR against bicubic PSNR for all 300 test patches.">
+      <figcaption><b>Fig. 2</b> Left: convergence on the held-out set. Right: all 300 test patches, model versus bicubic.</figcaption>
+    </figure>
+
+    <div class="col">
+      <p>The qualitative figure is the honest read on what the dB figure means. In the median and best rows the model recovers individual atom columns that are genuinely ambiguous in the input. In the worst row — a very low-dose patch where bicubic manages 16.6 dB — it produces a plausible lattice, but the error map shows systematic errors at column positions, so the reconstruction should not be trusted for measurement there.</p>
+
+      <h3 class="sub">Atom-column localisation</h3>
+      <p>Since the auxiliary model predicts an atom map, it can be scored the way a microscopist would: detect peaks, match them to the true <code>point_map</code> within 3 px at 128×128 scale, and count.</p>
+    </div>
+
+    <div class="tw" style="max-width:520px">
+      <table style="min-width:340px">
+        <thead><tr><th>Quantity</th><th class="num">Value</th></tr></thead>
+        <tbody>
+          <tr><td>Precision</td><td class="num">0.910</td></tr>
+          <tr><td>Recall</td><td class="num">0.802</td></tr>
+          <tr><td>F1</td><td class="num">0.853</td></tr>
+          <tr><td>Localisation RMSE (matched columns)</td><td class="num">0.96 px</td></tr>
+          <tr><td>True columns / detected</td><td class="num">31,126 / 27,436</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col">
+      <p>Sub-pixel accuracy on the columns it finds, and it rarely invents one, but it misses 20% — and the misses concentrate in the low-dose patches, visible as the sparse bottom row below. That recall figure, not the 33 dB, is the number to quote if the downstream use is measuring lattice spacings.</p>
+    </div>
+
+    <figure>
+      <img src="fig3_pointmap.png" alt="Predicted atom map beside the true point map for an easy case and a low-dose case.">
+      <figcaption><b>Fig. 3</b> Auxiliary head: predicted atom map against the true <code>point_map</code>. Easy case top, low-dose case bottom.</figcaption>
+    </figure>
+  </section>
+
+  <section id="data">
+    <div class="shead"><span class="snum">02</span><h2>The data</h2></div>
+    <div class="col">
+      <p><code>input</code> and <code>target</code> are not the same resolution, so this is not a pure denoising task.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Folder</th><th>Size</th><th class="num">Grey levels</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><code>input</code></td><td>64 × 64</td><td class="num">~11</td><td>Low-dose acquisition. Few distinct values means Poisson / counting-limited noise, not additive Gaussian.</td></tr>
+          <tr><td><code>target</code></td><td>128 × 128</td><td class="num">~208</td><td>High-dose image of the same field of view. Smooth, atom columns clearly resolved.</td></tr>
+          <tr><td><code>point_map</code></td><td>128 × 128</td><td class="num">~168</td><td>Sparse Gaussian blobs at atom-column positions. Ground-truth structure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">Grey levels are counted on a typical patch.</p>
+
+    <div class="col">
+      <p>1500 triplets, filenames matching across all three folders. They come from three source simulations, 500 patches each: <code>20_ADF_45_200</code>, <code>25_ADF_45_200</code>, <code>30_ADF_45_200</code> (the leading number is presumably thickness or dose).</p>
+      <p>Two checks worth recording:</p>
+      <ul>
+        <li><strong>The fields of view are aligned.</strong> Correlation between <code>input</code> and the 2×-downsampled <code>target</code> is 0.78–0.95 across sampled patches, so the model has to interpolate, not register.</li>
+        <li><strong>The patches do not overlap.</strong> Correlation between neighbouring patch indices from the same source is −0.14 to 0.30, i.e. no shared pixels. A random train/test split therefore does not leak.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="method">
+    <div class="shead"><span class="snum">03</span><h2>Method</h2></div>
+    <div class="col">
+      <p>An EDSR-style residual CNN (0.6M parameters, 0.8M with the auxiliary head) that predicts a <em>correction</em> on top of a plain 2× upsample rather than the image itself.</p>
+    </div>
+
+    <div class="diagram">
+      <svg viewBox="0 0 860 220" role="img" aria-label="Network diagram: the 64 by 64 input passes through a 3 by 3 convolution, eight residual blocks, a PixelShuffle 2x upsample and a residual convolution, and is added to a bilinear 2x upsample of the input to give the 128 by 128 output. A second convolution branches off the upsampled features to predict a 128 by 128 atom map.">
+        <!-- aux branch (top) -->
+        <path class="dg-alt" d="M444,110 L444,44 L530,44"/>
+        <path class="dg-alt-head" d="M530,40 L538,44 L530,48 Z"/>
+        <rect class="dg-box-a" x="538" y="26" width="92" height="36" rx="3"/>
+        <text class="dg-t" x="584" y="49" text-anchor="middle">aux conv</text>
+        <path class="dg-alt" d="M630,44 L652,44"/>
+        <path class="dg-alt-head" d="M652,40 L660,44 L652,48 Z"/>
+        <rect class="dg-box-a" x="660" y="20" width="118" height="48" rx="3"/>
+        <text class="dg-t" x="719" y="40" text-anchor="middle">atom map</text>
+        <text class="dg-s" x="719" y="56" text-anchor="middle">128×128</text>
+        <text class="dg-lab" x="790" y="48">AUX</text>
+
+        <!-- main row -->
+        <rect class="dg-box" x="8" y="88" width="86" height="48" rx="3"/>
+        <text class="dg-t" x="51" y="108" text-anchor="middle">input</text>
+        <text class="dg-s" x="51" y="124" text-anchor="middle">64×64</text>
+        <path class="dg-line" d="M94,112 L116,112"/><path class="dg-head" d="M116,108 L124,112 L116,116 Z"/>
+
+        <rect class="dg-box" x="124" y="88" width="96" height="48" rx="3"/>
+        <text class="dg-t" x="172" y="108" text-anchor="middle">conv 3×3</text>
+        <text class="dg-s" x="172" y="124" text-anchor="middle">64 ch</text>
+        <path class="dg-line" d="M220,112 L242,112"/><path class="dg-head" d="M242,108 L250,112 L242,116 Z"/>
+
+        <rect class="dg-box" x="250" y="88" width="100" height="48" rx="3"/>
+        <text class="dg-t" x="300" y="108" text-anchor="middle">8 residual</text>
+        <text class="dg-s" x="300" y="124" text-anchor="middle">blocks</text>
+        <path class="dg-line" d="M350,112 L372,112"/><path class="dg-head" d="M372,108 L380,112 L372,116 Z"/>
+
+        <rect class="dg-box" x="380" y="88" width="128" height="48" rx="3"/>
+        <text class="dg-t" x="444" y="108" text-anchor="middle">conv + PixelShuffle</text>
+        <text class="dg-s" x="444" y="124" text-anchor="middle">×2 upsample</text>
+        <path class="dg-line" d="M508,112 L530,112"/><path class="dg-head" d="M530,108 L538,112 L530,116 Z"/>
+
+        <rect class="dg-box" x="538" y="88" width="92" height="48" rx="3"/>
+        <text class="dg-t" x="584" y="108" text-anchor="middle">conv</text>
+        <text class="dg-s" x="584" y="124" text-anchor="middle">residual</text>
+        <path class="dg-line" d="M630,112 L657,112"/><path class="dg-head" d="M657,108 L665,112 L657,116 Z"/>
+
+        <circle class="dg-box" cx="680" cy="112" r="15"/>
+        <text class="dg-t" x="680" y="117" text-anchor="middle" font-size="15">+</text>
+        <path class="dg-line" d="M695,112 L720,112"/><path class="dg-head" d="M720,108 L728,112 L720,116 Z"/>
+
+        <rect class="dg-box-a" x="728" y="88" width="100" height="48" rx="3"/>
+        <text class="dg-t" x="778" y="108" text-anchor="middle">output</text>
+        <text class="dg-s" x="778" y="124" text-anchor="middle">128×128</text>
+
+        <!-- global skip (bottom) -->
+        <path class="dg-line" d="M51,136 L51,182 L276,182"/>
+        <path class="dg-head" d="M276,178 L284,182 L276,186 Z"/>
+        <rect class="dg-box" x="284" y="164" width="104" height="36" rx="3"/>
+        <text class="dg-t" x="336" y="187" text-anchor="middle">bilinear ×2</text>
+        <path class="dg-line" d="M388,182 L680,182 L680,131"/>
+        <path class="dg-head" d="M676,131 L680,123 L684,131 Z"/>
+        <text class="dg-lab" x="100" y="178">GLOBAL SKIP</text>
+      </svg>
+    </div>
+    <p class="tnote">Solid path: the image head. Dashed path: the auxiliary atom-map head, used only in the ablation.</p>
+
+    <div class="col">
+      <p>The global skip matters more than the block count. With only 1200 training patches, letting the network learn the low-frequency image from scratch wastes capacity; giving it the upsample for free means every parameter goes into deblurring and denoising.</p>
+      <p><strong>The auxiliary head.</strong> A second 3×3 convolution branches off the same upsampled features and is supervised by <code>point_map</code>, with total loss <code>L1(image) + 0.5 * L1(point_map)</code>. The idea is that forcing the trunk to localise atom columns should sharpen them in the restored image. Only the image head is used at evaluation; the atom map is a by-product. A model without this head was trained identically so the effect is measurable rather than assumed.</p>
+      <h3 class="sub">Training recipe</h3>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Setting</th><th>Value</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Loss</td><td>L1</td><td>Sharper reconstructions than L2, which regresses to the blurry conditional mean</td></tr>
+          <tr><td>Optimiser</td><td>Adam, lr 2e-4, cosine decay to 0</td><td>Standard for this architecture family</td></tr>
+          <tr><td>Epochs / batch</td><td>80 / 16</td><td>Loss and test PSNR both flat well before the end</td></tr>
+          <tr><td>Augmentation</td><td>Random flips + 90° rotations</td><td>Safe here: input and target are transformed identically, and the lattice has no privileged orientation</td></tr>
+          <tr><td>Precision / device</td><td>fp32 on Apple MPS</td><td>~9–11 s per epoch</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col">
+      <p style="margin-top:1.4em">One implementation note: the skip inside the network is bilinear, not bicubic, because PyTorch 2.2 has no <code>upsample_bicubic2d</code> kernel for MPS. The bicubic <em>baseline</em> is still computed properly, on CPU.</p>
+    </div>
+  </section>
+
+  <section id="evaluation">
+    <div class="shead"><span class="snum">04</span><h2>How it was evaluated</h2></div>
+    <div class="col">
+      <p>One split: 1200 train / 300 test, stratified so each of the three source simulations contributes proportionally to both sides. <code>sklearn.model_selection.train_test_split</code>, seed 42. The two models share the identical split, so their numbers are directly comparable.</p>
+      <p><strong>Nothing was selected on the test set.</strong> The epoch budget was fixed in advance and the last epoch is the one reported. Test PSNR is logged every 5 epochs, but only as a convergence trace; no early stopping, no checkpoint picking, no hyperparameter search against it.</p>
+      <p><strong>Metric conventions</strong>, which matter because PSNR and SSIM are both reported with several incompatible defaults in the literature:</p>
+      <ul>
+        <li>Images are scaled to [0, 1] and predictions clamped to that range; <code>data_range = 1.0</code>.</li>
+        <li>PSNR and SSIM are computed <strong>per patch</strong> and then averaged over the 300, rather than on a concatenated array. The standard deviation quoted is across patches.</li>
+        <li>SSIM uses Gaussian weighting, sigma 1.5, <code>use_sample_covariance=False</code> — the Wang et al. (2004) formulation, not scikit-image's default 7×7 uniform window, which reads ~0.01–0.02 higher.</li>
+        <li>The baseline is bicubic 2× upsampling of the input, scored against the same targets. Every gain quoted is relative to that, not to the raw 64×64 input, which cannot be scored against a 128×128 target at all.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="caveats">
+    <div class="shead"><span class="snum">05</span><h2>Caveats</h2></div>
+    <div class="col">
+      <p>Four things these numbers do not establish.</p>
+      <ol class="caveats">
+        <li><p><strong>This is simulated data, and the targets are unusually clean.</strong> The <code>target</code> images are smooth and nearly noise-free, so the mapping is closer to “denoise and sharpen toward a known blur kernel” than to the harder experimental case. Expect a drop on the real micrographs in <code>test/</code>.</p></li>
+        <li><p><strong>Patches from all three source simulations appear in both train and test.</strong> The split is random and stratified, which is the number normally reported, but it measures interpolation within known conditions — not generalisation to a new specimen, thickness or dose. A leave-one-source-out run would measure that, and it would almost certainly score lower.</p></li>
+        <li><p><strong>PSNR and SSIM reward smoothness.</strong> Both metrics tolerate slightly over-smoothed output, which for atomic-resolution imaging is exactly the failure mode that matters — a blurred atom column still scores well but is useless for measuring a lattice spacing. This is why the atom-localisation numbers are worth more than the dB figure.</p></li>
+        <li><p><strong>One split, one seed.</strong> With 300 test patches the standard error on mean PSNR is roughly 0.17 dB, so an unpaired comparison of the two models could not resolve a gap of a few tenths of a dB. The paired test in the results section does resolve it, which is why it was used — but it still speaks only for this split and this seed. Run several seeds before generalising the auxiliary-head finding.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="real">
+    <div class="shead"><span class="snum">06</span><h2>On the real micrographs</h2></div>
+    <div class="col">
+      <p>The model was run on all 15 experimental images in <code>test/</code>. <strong>It scores far worse than bicubic on every one of them — mean 20.78 dB vs 29.61 dB — but the metric is measuring the wrong thing, and the pictures tell a different story from the numbers.</strong></p>
+      <p>There is no ground truth for these micrographs, so PSNR and SSIM cannot be computed the way they were on the simulation. The protocol used instead: take the real image as the reference R, downsample it 2× to make the model's input, and score the restoration against R. This mirrors the training relationship exactly, and bicubic 2× is scored identically.</p>
+    </div>
+
+    <div class="tw" style="max-width:520px">
+      <table style="min-width:340px">
+        <thead><tr><th></th><th class="num">PSNR (dB)</th><th class="num">SSIM</th></tr></thead>
+        <tbody>
+          <tr><td>Bicubic ×2</td><td class="num">29.61</td><td class="num">0.7172</td></tr>
+          <tr><td>Model</td><td class="num">20.78</td><td class="num">0.5013</td></tr>
+          <tr class="neg"><td>Difference</td><td class="num"><strong>−8.83</strong></td><td class="num"><strong>−0.216</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">Mean over the 15 experimental images, scored against the downsample-proxy reference described above.</p>
+
+    <div class="col">
+      <p><strong>Why the metric is misleading here.</strong> R is a noisy experimental image. The model was trained to remove noise, so every grain of noise it correctly suppresses counts against it, while bicubic — which cannot denoise but also cannot over-smooth — stays closer to the noisy reference. The effect is largest on the images that were already denoised by other means before being saved: <code>Page1_..._result</code>, the two <code>Radial Wiener</code> images and the <code>iDPC</code> images, where bicubic reaches 33–48 dB because downsample-then-upsample is nearly lossless on a smooth image. On the genuinely noisy raw micrographs the gap is much smaller, 1.1–1.6 dB.</p>
+    </div>
+
+    <figure>
+      <img src="fig4_real_images.png" alt="Grid of 256 by 256 centre crops from the real micrographs, each shown as reference, bicubic and model output.">
+      <figcaption><b>Fig. 4</b> Real micrographs: 256×256 centre crops, reference vs bicubic vs model.</figcaption>
+    </figure>
+
+    <div class="col">
+      <p><strong>What the pictures actually show</strong>, which is the part worth acting on:</p>
+      <ul>
+        <li><strong>Page1, Page3, Page7</strong> — crystalline, lattice spacing within 1.0–1.5× of the training scale. The model output is visibly cleaner than either the reference or bicubic, with atom columns resolved that are ambiguous in the raw data. This is the model working as intended, and the negative dB is an artefact of scoring against a noisy reference.</li>
+        <li><strong>Page5 and Page8</strong> — the model paints a regular lattice texture into amorphous regions and into the vacuum, where the reference has no periodic structure at all. This is hallucination, and it is the failure mode that matters. Both images have lattice spacings 3.8–4.0× coarser than anything in training, so the network is fitting its learned periodicity onto content it has never seen.</li>
+        <li><strong>Page4</strong> — very low dose. The output is plausible but the SSIM of 0.12–0.23 says the fine structure is not being recovered reliably.</li>
+      </ul>
+
+      <div class="call">
+        <span class="tag">Caution on the evidence</span>
+        <p>The visual difference between “denoised” and “hallucinated” is clear to the eye in these crops, but without ground truth there is no clean number that separates the two. A spectral test confirms the model amplifies periodic structure 20–90× relative to the broadband background on every image, including the ones where the result looks right — which is exactly what denoising does too, so that number cannot distinguish the good cases from the bad.</p>
+      </div>
+
+      <div class="call stop">
+        <span class="tag">Practical conclusion</span>
+        <p>Do not apply this model to experimental data yet, and do not read the −8.83 dB as the model being broken. The two real problems are the scale mismatch and the absence of any experimental training data. The fixes, in order: resample each micrograph so its lattice spacing matches the training scale before inference; add scale augmentation to training; and score on experimental pairs (same field imaged at low and high dose) rather than on this downsample proxy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="repro">
+    <div class="shead"><span class="snum">07</span><h2>Reproducing it, and what to do next</h2></div>
+    <div class="col">
+      <p>Everything lives in the <code>workshop-0922/</code> project folder.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>File</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>train.py</code></td><td>Loads the data, trains, evaluates, writes <code>out/results_&lt;tag&gt;.json</code> and the model weights</td></tr>
+          <tr><td><code>make_figures.py</code></td><td>Builds the three simulation figures from the saved predictions</td></tr>
+          <tr><td><code>eval_atoms.py</code></td><td>Atom-column detection scoring for the auxiliary head</td></tr>
+          <tr><td><code>out/</code></td><td>Metrics, predictions, trained weights, training logs</td></tr>
+          <tr><td><code>figures/</code></td><td>The PNGs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+<pre><code>python3 train.py --tag plain              <span class="cm"># image head only</span>
+python3 train.py --tag aux --aux          <span class="cm"># + point_map head</span>
+python3 make_figures.py &amp;&amp; python3 eval_atoms.py</code></pre>
+
+    <div class="col">
+      <p>About 13 minutes per run on an M-series Mac (MPS, fp32). No CUDA needed, no data preprocessing step — <code>train.py</code> reads the PNGs directly.</p>
+
+      <h3 class="sub">Worth doing next, roughly in order of what each would teach you</h3>
+      <ol class="next">
+        <li><p><strong>Leave-one-source-out.</strong> Train on two of the three simulations, test on the third. This is the number that predicts behaviour on a new specimen, and it is the honest headline if the model is ever pointed at unseen data. About 40 minutes for all three folds.</p></li>
+        <li><p><strong>Fix the scale mismatch on <code>test/</code>.</strong> Resample each micrograph to the training lattice scale before inference, then re-read the crops in Fig. 4. This tells you immediately whether the simulation-to-experiment gap is small or fatal. Ten minutes.</p></li>
+        <li><p><strong>Add <code>train_data2</code>.</strong> It has <code>input</code> and <code>target</code> but no <code>point_map</code>, so it can train the image head. Doubling the data is usually worth more than any architecture change at this scale.</p></li>
+        <li><p><strong>Then, and only then, a bigger model.</strong> 8 residual blocks at 64 channels is deliberately small. Scaling up is the obvious lever, but it is the least informative one until the generalisation question above is settled.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <p>ADF-STEM restoration benchmark · 1500 simulated patches, 15 experimental micrographs · 22 September 2026</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
