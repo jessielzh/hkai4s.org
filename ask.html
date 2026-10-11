@@ -12,16 +12,20 @@
 h1{font-size:clamp(32px,5vw,48px);margin:20px 0 12px}
 .lead{font-size:19px;color:var(--sky);margin-bottom:36px}
 
-ol.three{list-style:none;padding:0;display:grid;gap:14px;margin-bottom:14px}
-ol.three li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px}
-ol.three .n{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--sky);color:var(--sky);
-  font-size:14px;font-weight:700;display:grid;place-items:center;margin-top:1px}
-ol.three b{color:var(--paper)}
-.addr{color:var(--sky);word-break:break-all}
+dl.parts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:12px 24px;margin-bottom:8px}
+dl.parts dt{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);padding-top:3px}
+dl.parts dd{margin:0}
+@media (max-width:480px){dl.parts{grid-template-columns:1fr;gap:2px}dl.parts dd{margin-bottom:12px}}
+.addr{color:var(--sky);overflow-wrap:anywhere}
 
-details{margin:18px 0 36px;color:var(--faint);font-size:15px}
-details summary{cursor:pointer;color:var(--sky)}
-details pre{white-space:pre-wrap;margin:12px 0 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;
+.example{margin:22px 0 40px;color:var(--faint);font-size:15px}
+.example .head{color:var(--sky)}
+.example .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 16px}
+#sample .note{color:var(--sky);font-style:italic}
+.example .copy{font:inherit;font-size:14px;color:var(--paper);background:var(--raised);border:1px solid var(--rule);border-radius:6px;padding:4px 12px;cursor:pointer}
+.example .copy:hover{border-color:var(--sky)}
+#sample b{display:block;color:var(--sky);font-weight:600;font-size:12px;letter-spacing:.1em}
+#sample{white-space:pre-wrap;margin:12px 0 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;
   line-height:1.6;color:var(--text);background:var(--raised);border-radius:8px;padding:14px 16px}
 
 label.q,legend{display:block;font-weight:600;color:var(--paper);margin-bottom:8px;font-size:17px}
@@ -39,7 +43,7 @@ fieldset{border:0;padding:0;margin-top:32px}
 .roles label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
 .roles input{accent-color:var(--sky);margin-top:6px}
 .roles small{color:var(--faint);font-size:14px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.fields{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
 .fields .wide{grid-column:1/-1}
 .fields label{display:block;font-size:14px;color:var(--faint);margin-bottom:4px}
 .hp{position:absolute;left:-9999px}
@@ -66,38 +70,31 @@ fieldset{border:0;padding:0;margin-top:32px}
   <p class="lead">You know which questions are worth asking. Tell us one.</p>
 
   <form id="f" novalidate>
-    <p style="margin-bottom:14px">The fastest route is three things:</p>
-    <ol class="three">
-      <li><span class="n">1</span><div><b>Input → output.</b> What you have, and what you want predicted from it.</div></li>
-      <li><span class="n">2</span><div><b>Data.</b> A link to examples of the input and output: a public link, or a PolyU OneDrive folder shared with <span class="addr">jessie-zh.li@polyu.edu.hk</span>.</div></li>
-      <li><span class="n">3</span><div><b>Metric.</b> How you would judge a good answer.</div></li>
-    </ol>
-    <details>
-      <summary>Example: the message that started Jiong Zhao’s case</summary>
-<pre>here is the data: …/simulation/train_data1
+    <p style="margin-bottom:16px">The quickest way is to tell us three things:</p>
+    <dl class="parts">
+      <dt>Problem</dt><dd>What you have, and what you would like to predict or find from it.</dd>
+      <dt>Data</dt><dd>A link to your data: a public link, or a PolyU OneDrive folder shared with <span class="addr">jessie-zh.li@polyu.edu.hk</span>. As a rough guide for a first look: about 1,000 samples with known answers, under 1&nbsp;GB. If yours is larger, share a representative part; we’ll plan the full work with you together.</dd>
+      <dt>Metric</dt><dd>How you would judge a good answer.</dd>
+    </dl>
+    <div class="example">
+      <div class="head">Example: the message that started Jiong Zhao’s case</div>
+<pre id="sample"><b>PROBLEM</b>our goal is to train a machine learning model, predict from /input to /target
 
-in the /point_map folder, it is the ground truth
+<b>DATA</b>here is the data: …/simulation/train_data1   <span class="note">← in your message, put the link to your data here</span>
 in the /input folder, it is the data with some noise
 in the /target folder, it is the data with another type of noise
-
-our goal is to train a machine learning model, predict from /input to /target
-
+in the /point_map folder, it is the ground truth
 there are 1500 samples
 
-can you do a machine learning model and report 5-fold accuracy
-
-use the following metrics:
+<b>METRIC</b>use the following metrics:
 PSNR: Peak signal-to-noise ratio
 SSIM: Structural similarity index measure</pre>
-      <p>Typed on 22 September 2026. <a href="case/">See what came of it</a>.</p>
-    </details>
+      <div class="foot"><p>Typed on 22 September 2026. <a href="case/">See what came of it</a>.</p><button type="button" class="copy" id="use-sample">Use this example as a start</button></div>
+    </div>
 
     <label class="q" for="msg">Your question</label>
-    <textarea id="msg" name="message" required placeholder="Describe your problem here."></textarea>
-    <div class="under">
-      <button type="button" class="link-btn" id="tpl">Start from the three parts</button>
-      <span>Not sure how to split it? Just describe it in your own words, and we’ll arrange a time to talk it through.</span>
-    </div>
+    <textarea id="msg" name="message" required placeholder="My problem is …&#10;&#10;My data is here: …&#10;&#10;Please use this metric: …"></textarea>
+    <p class="under">Can’t describe your problem in the format above? Just tell us about it in your own words, and we’ll find a time to talk it through together.</p>
 
     <fieldset>
       <legend>I am</legend>
@@ -119,7 +116,7 @@ SSIM: Structural similarity index measure</pre>
     <button type="submit" class="send" id="send">Send</button>
     <p class="err" id="err" role="alert"></p>
 
-    <p class="policy"><b>Who we respond to.</b> We respond within a week to every PolyU tenure-line faculty member. Students and postdocs are welcome to write too: please name your supervisor, and we’ll bring them in. We work with research groups, through their PI. Others: we read every request and respond where we can help.</p>
+    <p class="policy"><b>How we’ll get back to you.</b> We’d love to hear from everyone. If you’re a PolyU faculty member, we’ll get back to you within a week. Students and postdocs, we’d be glad to help too; please include your supervisor so we can work with your group together. If you’re from outside PolyU, we read every message and will reach out wherever we can help.</p>
   </form>
 
   <div id="thanks" hidden aria-live="polite">
@@ -135,20 +132,21 @@ SSIM: Structural similarity index measure</pre>
 const KEY = "4f2f342d-be9f-47d2-9382-7f1d2335ea88"; // from web3forms.com; delivers to Jessie's inbox only
 
 const $ = id => document.getElementById(id);
-const msg = $("msg"), tpl = $("tpl");
+const msg = $("msg");
 
-tpl.onclick = () => {
-  if (msg.value.trim() && tpl.dataset.armed !== "1") {     // ask once, in place, before replacing their text
-    tpl.dataset.armed = "1";
-    tpl.textContent = "Replace what you wrote? Click again";
-    return;
+$("use-sample").onclick = () => {
+  const b = $("use-sample");
+  if (msg.value.trim() && b.dataset.armed !== "1") {        // ask once, in place, before replacing their text
+    b.dataset.armed = "1"; b.textContent = "Replace what you wrote? Click again"; return;
   }
-  tpl.dataset.armed = "";
-  tpl.textContent = "Start from the three parts";
-  msg.value = "Input:\n\nOutput:\n\nData (link):\n\nMetric:\n";
-  msg.focus();
-  msg.setSelectionRange(7, 7);
+  b.dataset.armed = ""; b.textContent = "Use this example as a start";
+  msg.value = [...$("sample").childNodes].filter(n => !(n.classList && n.classList.contains("note")))
+    .map(n => n.nodeName === "B" ? n.textContent[0] + n.textContent.slice(1).toLowerCase() + ":\n" : n.textContent)
+    .join("").replace(/…\/simulation\/train_data1\s*/, "[link to your data]\n");
+  msg.focus(); msg.setSelectionRange(0, 0); msg.scrollTop = 0;
+  msg.scrollIntoView({behavior: "smooth", block: "center"});
 };
+
 
 document.querySelectorAll('input[name=role]').forEach(r => r.onchange = () => {
   const student = r.checked && r.value.startsWith("PolyU student");
