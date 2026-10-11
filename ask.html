@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask a question · RCAI4S</title>
+<meta name="description" content="Ask the Research Centre on AI for Science (RCAI4S) at PolyU a question from your research.">
+<link rel="stylesheet" href="style.css">
+<style>
+.back{font-size:15px;border:0;color:var(--faint)}
+.back:hover{color:var(--mint)}
+h1{font-size:clamp(32px,5vw,48px);margin:20px 0 12px}
+.lead{font-size:19px;color:var(--sky);margin-bottom:36px}
+
+ol.three{list-style:none;padding:0;display:grid;gap:14px;margin-bottom:14px}
+ol.three li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px}
+ol.three .n{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--sky);color:var(--sky);
+  font-size:14px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+ol.three b{color:var(--paper)}
+.addr{color:var(--sky);word-break:break-all}
+
+details{margin:18px 0 36px;color:var(--faint);font-size:15px}
+details summary{cursor:pointer;color:var(--sky)}
+details pre{white-space:pre-wrap;margin:12px 0 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;
+  line-height:1.6;color:var(--text);background:var(--raised);border-radius:8px;padding:14px 16px}
+
+label.q,legend{display:block;font-weight:600;color:var(--paper);margin-bottom:8px;font-size:17px}
+textarea,input[type=text],input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--paper);
+  background:var(--raised);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+textarea{min-height:240px;resize:vertical}
+textarea::placeholder{color:var(--faint)}
+textarea:focus,input:focus{outline:none;border-color:var(--sky)}
+.under{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:14px;color:var(--faint)}
+.link-btn{font:inherit;font-size:14px;background:none;border:0;padding:0;color:var(--sky);cursor:pointer;border-bottom:1px dashed currentColor}
+.link-btn:hover{color:var(--mint)}
+
+fieldset{border:0;padding:0;margin-top:32px}
+.roles{display:grid;gap:8px}
+.roles label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.roles input{accent-color:var(--sky);margin-top:6px}
+.roles small{color:var(--faint);font-size:14px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.fields .wide{grid-column:1/-1}
+.fields label{display:block;font-size:14px;color:var(--faint);margin-bottom:4px}
+.hp{position:absolute;left:-9999px}
+.send{margin-top:28px;font:inherit;font-size:17px;font-weight:600;color:var(--paper);background:var(--blue);
+  border:0;border-radius:8px;padding:12px 32px;cursor:pointer}
+.send:hover{background:#3B58D0}
+.send:disabled{opacity:.5;cursor:default}
+.err{color:#FF9D8A;font-size:15px;margin-top:12px;min-height:1.2em}
+.policy{margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);font-size:15px;color:var(--faint)}
+.policy b{color:var(--text)}
+
+#thanks h2{font-size:30px;color:var(--paper);margin-bottom:8px}
+#thanks pre{white-space:pre-wrap;font-family:inherit;font-size:15px;background:var(--raised);border-radius:8px;
+  padding:16px 18px;margin:18px 0 12px;max-height:360px;overflow:auto}
+
+@media (max-width:560px){.fields{grid-template-columns:1fr} main{padding-top:40px}}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<main>
+  <a class="back" href="./">← RCAI4S · Research Centre on AI for Science</a>
+  <h1>Ask a question</h1>
+  <p class="lead">You know which questions are worth asking. Tell us one.</p>
+
+  <form id="f" novalidate>
+    <p style="margin-bottom:14px">The fastest route is three things:</p>
+    <ol class="three">
+      <li><span class="n">1</span><div><b>Input → output.</b> What you have, and what you want predicted from it.</div></li>
+      <li><span class="n">2</span><div><b>Data.</b> A link to examples of the input and output: a public link, or a PolyU OneDrive folder shared with <span class="addr">jessie-zh.li@polyu.edu.hk</span>.</div></li>
+      <li><span class="n">3</span><div><b>Metric.</b> How you would judge a good answer.</div></li>
+    </ol>
+    <details>
+      <summary>Example: the message that started Jiong Zhao’s case</summary>
+<pre>here is the data: …/simulation/train_data1
+
+in the /point_map folder, it is the ground truth
+in the /input folder, it is the data with some noise
+in the /target folder, it is the data with another type of noise
+
+our goal is to train a machine learning model, predict from /input to /target
+
+there are 1500 samples
+
+can you do a machine learning model and report 5-fold accuracy
+
+use the following metrics:
+PSNR: Peak signal-to-noise ratio
+SSIM: Structural similarity index measure</pre>
+      <p>Typed on 22 September 2026. <a href="https://claude.ai/artifact/1R937ZqNb7b5jaGmMypLnw">See what came of it</a>.</p>
+    </details>
+
+    <label class="q" for="msg">Your question</label>
+    <textarea id="msg" name="message" required placeholder="Describe your problem here."></textarea>
+    <div class="under">
+      <button type="button" class="link-btn" id="tpl">Start from the three parts</button>
+      <span>Not sure how to split it? Just describe it in your own words, and we’ll arrange a time to talk it through.</span>
+    </div>
+
+    <fieldset>
+      <legend>I am</legend>
+      <div class="roles">
+        <label><input type="radio" name="role" value="PolyU faculty" required><span>PolyU faculty</span></label>
+        <label><input type="radio" name="role" value="PolyU student / postdoc"><span>PolyU student or postdoc <small>(please name your supervisor)</small></span></label>
+        <label><input type="radio" name="role" value="Other"><span>Other</span></label>
+      </div>
+    </fieldset>
+
+    <div class="fields">
+      <div><label for="name">Name</label><input type="text" id="name" name="name" required autocomplete="name"></div>
+      <div><label for="aff">Department / affiliation</label><input type="text" id="aff" name="affiliation" required autocomplete="organization"></div>
+      <div class="wide"><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
+      <div class="wide" id="sup" hidden><label for="supv">Supervisor’s name and email</label><input type="text" id="supv" name="supervisor"></div>
+    </div>
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <button type="submit" class="send" id="send">Send</button>
+    <p class="err" id="err" role="alert"></p>
+
+    <p class="policy"><b>Who we respond to.</b> We respond within a week to every PolyU tenure-line faculty member. Students and postdocs are welcome to write too: please name your supervisor, and we’ll bring them in. We work with research groups, through their PI. Others: we read every request and respond where we can help.</p>
+  </form>
+
+  <div id="thanks" hidden aria-live="polite">
+    <h2>Thank you.</h2>
+    <p id="thanks-p"></p>
+    <pre id="echo"></pre>
+    <button type="button" class="link-btn" id="copy">Copy text</button>
+  </div>
+</main>
+<footer>© 2026 RCAI4S · PolyU Academy for Artificial Intelligence · Contact: <a href="https://jessielzh.com">Prof. Jessie Li</a></footer>
+
+<script>
+const KEY = "4f2f342d-be9f-47d2-9382-7f1d2335ea88"; // from web3forms.com; delivers to Jessie's inbox only
+
+const $ = id => document.getElementById(id);
+const msg = $("msg"), tpl = $("tpl");
+
+tpl.onclick = () => {
+  if (msg.value.trim() && tpl.dataset.armed !== "1") {     // ask once, in place, before replacing their text
+    tpl.dataset.armed = "1";
+    tpl.textContent = "Replace what you wrote? Click again";
+    return;
+  }
+  tpl.dataset.armed = "";
+  tpl.textContent = "Start from the three parts";
+  msg.value = "Input:\n\nOutput:\n\nData (link):\n\nMetric:\n";
+  msg.focus();
+  msg.setSelectionRange(7, 7);
+};
+
+document.querySelectorAll('input[name=role]').forEach(r => r.onchange = () => {
+  const student = r.checked && r.value.startsWith("PolyU student");
+  $("sup").hidden = !student;
+  $("supv").required = student;
+});
+
+$("f").onsubmit = async e => {
+  e.preventDefault();
+  const f = e.target, err = $("err");
+  err.textContent = "";
+  if (!f.checkValidity()) {
+    const bad = f.querySelector(":invalid");
+    err.textContent =
+      bad.type === "radio" ? "Please say who you are." :
+      bad.id === "msg" ? "Please write your question." :
+      bad.type === "email" ? "Please enter a valid email address." :
+      "Please fill in " + f.querySelector(`label[for="${bad.id}"]`).textContent.toLowerCase() + ".";
+    bad.focus();
+    return;
+  }
+  const d = Object.fromEntries(new FormData(f));
+  const text = `${d.name} · ${d.affiliation} · ${d.email}\n${d.role}` +
+    (d.supervisor ? `\nSupervisor: ${d.supervisor}` : "") + `\n\n${d.message}`;
+
+  $("send").disabled = true;
+  $("send").textContent = "Sending…";
+  try {
+    if (KEY !== "WEB3FORMS_ACCESS_KEY") {
+      const r = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {"Content-Type": "application/json", Accept: "application/json"},
+        body: JSON.stringify({access_key: KEY, subject: `hkai4s.org: ${d.name} (${d.role})`,
+          from_name: "hkai4s.org", replyto: d.email, ...d})
+      });
+      const j = await r.json();
+      if (!j.success) throw new Error(j.message);
+    }
+    $("thanks-p").textContent = d.role === "Other"
+      ? "We’ll read it and get back to you if we can help. Here is what you sent, for your records:"
+      : "We will respond within a week. Here is what you sent, for your records:";
+    $("echo").textContent = text;
+    f.hidden = true;
+    $("thanks").hidden = false;
+    scrollTo(0, 0);
+  } catch (x) {
+    err.textContent = "That didn’t go through. Please try again, or email jessie-zh.li@polyu.edu.hk.";
+    $("send").disabled = false;
+    $("send").textContent = "Send";
+  }
+};
+
+$("copy").onclick = async () => {
+  try { await navigator.clipboard.writeText($("echo").textContent); $("copy").textContent = "Copied"; }
+  catch { getSelection().selectAllChildren($("echo")); $("copy").textContent = "Selected. Press ⌘C to copy"; }
+};
+</script>
+</body>
+</html>

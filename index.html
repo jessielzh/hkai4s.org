@@ -5,27 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RCAI4S · PolyU</title>
 <meta name="description" content="Research Centre on AI for Science (RCAI4S), PolyU Academy for Artificial Intelligence, The Hong Kong Polytechnic University. Using tokens to light up science.">
+<link rel="stylesheet" href="style.css">
 <style>
-:root{
-  --charcoal:#1C1E2B; --paper:#FFFFFF; --faint:#99A0B6;
-  --sky:#82C4E2; --blue:#2F4AB8; --violet:#A073D5; --mint:#62C4AB;
-  --stripe:linear-gradient(90deg,var(--sky),var(--blue) 36%,var(--violet) 66%,var(--mint));
-}
-*{box-sizing:border-box;margin:0}
-html,body{height:100%}
-body{background:var(--charcoal);color:var(--paper);
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
-  display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-.stripe{height:6px;background:var(--stripe)}
-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 16px;max-width:880px;width:100%;margin:0 auto}
-.sm{font-size:15px;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
-h1{font-size:clamp(34px,6vw,60px);line-height:1.12;font-weight:700;margin:20px 0 24px}
-h1 .hi{color:var(--violet)}
-.md{font-size:clamp(20px,3vw,28px);color:var(--sky)}
-nav{margin-top:56px;display:flex;flex-wrap:wrap;gap:12px 28px;font-size:17px}
-a{color:var(--paper);text-decoration:none;border-bottom:1px solid var(--faint)}
-a:hover{border-color:var(--mint);color:var(--mint)}
-footer{padding:24px 16px;text-align:center;font-size:13px;color:var(--faint)}
+.links{margin-top:64px;display:grid;gap:28px;max-width:640px}
+.links a{display:block;border:0;color:var(--paper)}
+.links .t{font-size:22px;font-weight:600;border-bottom:1px solid var(--faint);display:inline}
+.links a:hover .t{color:var(--mint);border-color:var(--mint)}
+.links .d{display:block;margin-top:6px;font-size:16px;color:var(--faint)}
 </style>
 </head>
 <body>
@@ -34,10 +20,16 @@ footer{padding:24px 16px;text-align:center;font-size:13px;color:var(--faint)}
   <p class="sm">PAAI · The Hong Kong Polytechnic University</p>
   <h1>Research Centre on<br>AI for Science (<span class="hi">RCAI4S</span>)</h1>
   <p class="md">Using tokens to light up science.</p>
-  <nav>
-    <a href="https://jessielzh.com">Prof. Jessie Li</a>
-  </nav>
+
+  <div class="links">
+    <a href="ask.html"><span class="t">Ask a question →</span>
+      <span class="d">Tell us a problem from your research. PolyU faculty hear back within a week.</span></a>
+    <a href="https://claude.ai/artifact/1R937ZqNb7b5jaGmMypLnw"><span class="t">Jiong Zhao’s case →</span>
+      <span class="d">Denoising atomic-resolution micrographs with an AI agent, in one working session (22 Sep 2026).</span></a>
+    <a href="https://jessielzh.com/talks/2026-10-paai-salon/"><span class="t">Research Salon slides →</span>
+      <span class="d">Establishment of the Centre, PAAI Research Salon, 12 Oct 2026.</span></a>
+  </div>
 </main>
-<footer>© 2026 RCAI4S · PolyU Academy for Artificial Intelligence</footer>
+<footer>© 2026 RCAI4S · PolyU Academy for Artificial Intelligence · Contact: <a href="https://jessielzh.com">Prof. Jessie Li</a></footer>
 </body>
 </html>
